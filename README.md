@@ -103,5 +103,3 @@ Para que você tenha dados para testar, você pode fazer o seguinte:
 2.  A API estará rodando em `http://localhost:3001`. Você pode usar ferramentas como Postman ou Insomnia para testar os endpoints.
 
 ---
-
-**Em resumo:** Seu código está correto por não incluir a chave de serviço. A "solução" é fornecer instruções claras e um script de migração (se necessário) para que o professor possa configurar o *próprio* ambiente Firebase e testar seu projeto. Isso demonstra um bom entendimento de segurança e implantação de projetos.
