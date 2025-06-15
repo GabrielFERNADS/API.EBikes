@@ -1,0 +1,92 @@
+{
+  "bicicletas": [
+    {
+      "id": "b1",
+      "modelo": "elétrica",
+      "quilometragem_carga": 20,
+      "status": "disponível",
+      "baia": "Estação Centro Histórico",
+      "img": "https://placehold.co/150x150/FF0000/FFFFFF?text=Bike+1",
+      "turnstile_status": "docked"
+    },
+    {
+      "id": "b2",
+      "modelo": "elétrica",
+      "quilometragem_carga": 15,
+      "status": "disponível",
+      "baia": "Estação Orla do Guaíba",
+      "img": "https://placehold.co/150x150/00FF00/000000?text=Bike+2",
+      "turnstile_status": "docked"
+    },
+    {
+      "id": "b3",
+      "modelo": "elétrica",
+      "quilometragem_carga": 10,
+      "status": "indisponível",
+      "baia": "Estação Bairro Menino-Deus",
+      "img": "https://placehold.co/150x150/0000FF/FFFFFF?text=Bike+3",
+      "turnstile_status": "unavailable_dock"
+    },
+    {
+      "id": "b4",
+      "modelo": "elétrica",
+      "quilometragem_carga": 20,
+      "status": "disponível",
+      "baia": "Estação do Gasômetro",
+      "img": "https://placehold.co/150x150/FFFF00/000000?text=Bike+4",
+      "turnstile_status": "docked"
+    }
+  ],
+  "alugueis": [
+    {
+      "id": "a1",
+      "bicicleta_id": "b3",
+      "tempo_alugado_minutos": 60,
+      "preco": 25,
+      "data_inicio": "2025-05-30T16:00:00-03:00",
+      "data_fim": null,
+      "status": "ativo"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "u1",
+      "username": "admin",
+      "password": "password123",
+      "token": "admin-token-xyz",
+      "name": "Administrador",
+      "email": "admin@empresa.com",
+      "phone": "5551987654321",
+      "address": "Rua Central, 100",
+      "img": "https://placehold.co/100x100/A0A0A0/FFFFFF?text=Admin",
+      "kms": 0,
+      "emissao": 0
+    },
+    {
+      "id": "95d411e9-1a41-45a7-9670-02b8a672c960",
+      "username": "Gabriel",
+      "password": "123",
+      "token": "ef577e0d-623b-4db1-b54b-2ae71773f175",
+      "name": "Gabriel Santos",
+      "email": "gabriel@email.com",
+      "phone": "5551999998888",
+      "address": "Avenida Exemplo, 123",
+      "img": "https://placehold.co/100x100/F0F0F0/000000?text=Gabriel",
+      "kms": 120,
+      "emissao": 25
+    },
+    {
+      "id": "9dde14da-3ae3-4279-b210-92a42f6a6b0a",
+      "username": "Bianka ",
+      "password": "321",
+      "token": "96aa46c9-3424-4863-b2b3-66a35ecf42f0",
+      "name": "Bianka Silva",
+      "email": "bianka@email.com",
+      "phone": "5551977776666",
+      "address": "Rua da Praia, 456",
+      "img": "",
+      "kms": 0,
+      "emissao": 0
+    }
+  ]
+}
