@@ -103,3 +103,85 @@ Para que você tenha dados para testar, você pode fazer o seguinte:
 2.  A API estará rodando em `http://localhost:3001`. Você pode usar ferramentas como Postman ou Insomnia para testar os endpoints.
 
 ---
+
+### 🔑 API Keys e Acesso
+
+Esta API utiliza **API Keys** para controle de acesso e diferenciação de permissões entre usuários:
+
+* **`x-api-key` no Header:** Todas as requisições para a API devem incluir um header `x-api-key` contendo a chave de acesso.
+
+Existem dois tipos de chaves de API:
+
+1.  **`DEVELOPER_API_KEY` (Chave de Desenvolvedor):**
+    * **Valor Padrão (para desenvolvimento):** `dev-secret-bike-key-12345`
+    * **Permissões:** Acesso total a todos os endpoints, incluindo operações de criação, atualização e exclusão de bicicletas, e visualização de todos os aluguéis. Não possui limite de requisições (rate limiting).
+    * **Uso:** Destinada a administradores ou ferramentas de desenvolvimento.
+
+2.  **`CLIENT_API_KEY` (Chave de Cliente):**
+    * **Valor Padrão (para desenvolvimento):** `client-public-bike-key-abcde`
+    * **Permissões:** Acesso limitado a endpoints específicos, como listagem de bicicletas (sem criação/atualização/exclusão), registro e login de usuários, e gerenciamento dos próprios aluguéis. Está sujeita a um limite de 100 requisições a cada 15 minutos.
+    * **Uso:** Destinada a aplicações clientes (front-ends, apps móveis) que interagem com a API em nome de usuários comuns.
+
+---
+
+### 🚀 Endpoints da API
+
+A API oferece os seguintes endpoints para gerenciamento de recursos:
+
+#### **Usuários (`/usuarios`)**
+
+* `POST /usuarios`
+    * **Descrição:** Registra um novo usuário.
+    * **Permissão:** Ambas as API Keys (Developer/Client).
+    * **Corpo da Requisição:** `{ username, password, name?, email?, phone?, address?, img?, kms?, emissao? }`
+* `POST /usuarios/login`
+    * **Descrição:** Autentica um usuário existente e retorna um token de sessão.
+    * **Permissão:** Ambas as API Keys (Developer/Client).
+    * **Corpo da Requisição:** `{ username, password }`
+* `GET /usuarios/:id`
+    * **Descrição:** Retorna o perfil de um usuário específico.
+    * **Permissão:**
+        * **Developer Key:** Acesso a qualquer perfil.
+        * **Client Key:** Acesso apenas ao próprio perfil (o `id` na URL deve corresponder ao `user_id` associado ao token do header `Authorization: Bearer <user_token>`).
+
+#### **Bicicletas (`/bicicletas`)**
+
+* `GET /bicicletas`
+    * **Descrição:** Lista todas as bicicletas. Pode ser filtrada por `status` (`?status=disponível`) ou `baia` (`?baia=Estação Centro Histórico`).
+    * **Permissão:** Ambas as API Keys (Developer/Client).
+* `GET /bicicletas/:id`
+    * **Descrição:** Retorna os detalhes de uma bicicleta específica.
+    * **Permissão:** Ambas as API Keys (Developer/Client).
+* `POST /bicicletas`
+    * **Descrição:** Adiciona uma nova bicicleta.
+    * **Permissão:** Apenas **Developer Key**.
+    * **Corpo da Requisição:** `{ quilometragem_carga (10|15|20), baia, img?, turnstile_status? (docked|undocked|unavailable_dock) }`
+* `PUT /bicicletas/:id`
+    * **Descrição:** Atualiza os dados de uma bicicleta existente.
+    * **Permissão:** Apenas **Developer Key**.
+    * **Corpo da Requisição:** `{ status?, quilometragem_carga?, baia?, img?, turnstile_status? }`
+* `DELETE /bicicletas/:id`
+    * **Descrição:** Remove uma bicicleta. Não é possível remover bicicletas `alugada`.
+    * **Permissão:** Apenas **Developer Key**.
+
+#### **Aluguéis (`/alugueis`)**
+
+* `POST /alugueis`
+    * **Descrição:** Cria um novo aluguel de bicicleta.
+    * **Permissão:** Apenas **Client Key**. Requer `Authorization: Bearer <user_token>` e `x-api-key: client-public-bike-key-abcde`.
+    * **Corpo da Requisição:** `{ bicicleta_id, tempo_alugado_minutos (30|60|120), catraca_id_origem }`
+* `PUT /alugueis/:id/finalizar`
+    * **Descrição:** Finaliza um aluguel de bicicleta.
+    * **Permissão:** Apenas **Client Key**. Requer `Authorization: Bearer <user_token>` e `x-api-key: client-public-bike-key-abcde`.
+    * **Corpo da Requisição:** `{ catraca_id_retorno, quilometragem_carga_final (10|15|20) }`
+* `GET /alugueis`
+    * **Descrição:** Lista todos os aluguéis. Pode ser filtrada por `status` (`?status=ativo`).
+    * **Permissão:**
+        * **Developer Key:** Acesso a todos os aluguéis.
+        * **Client Key:** Acesso apenas aos próprios aluguéis (o `user_id` é inferido do token `Authorization: Bearer <user_token>`).
+* `GET /alugueis/:id`
+    * **Descrição:** Retorna os detalhes de um aluguel específico.
+    * **Permissão:**
+        * **Developer Key:** Acesso a qualquer aluguel.
+        * **Client Key:** Acesso apenas aos próprios aluguéis (o `id` na URL deve corresponder a um aluguel do `user_id` associado ao token).
+
