@@ -164,7 +164,7 @@ A API oferece os seguintes endpoints para gerenciamento de recursos:
     * **Descrição:** Remove uma bicicleta. Não é possível remover bicicletas `alugada`.
     * **Permissão:** Apenas **Developer Key**.
 
-#### **Aluguéis (`/alugueis`)**
+#### **Aluguéis (`/alugueis`)** ( Não Está Funcionando !!!!)
 
 * `POST /alugueis`
     * **Descrição:** Cria um novo aluguel de bicicleta.
